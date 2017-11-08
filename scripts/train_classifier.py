@@ -28,7 +28,7 @@ def train_classifier():
     filepath = rospy.get_param('~file_name', 'example_data.csv')
     if len(filepath) > 0 and filepath[0] != '/':
         rospack = rospkg.RosPack()
-        filepath = rospack.get_path('image_classifier') + '/data/grasp_preferences/' + filepath
+        filepath = rospack.get_path('image_classifier') + '/data/training/' + filepath
 
     split = 0.4
 

@@ -11,6 +11,8 @@ class ImageNode:
     def __init__(self):
         """Initialize image subscriber and classifier client."""
         self.image_subscriber = rospy.Subscriber('/raspicam_node/image/compressed', CompressedImage, self.imageCallback)
+        print 'Waiting for classifier service to come up...'
+        rospy.wait_for_service('/classifier_node/classify')
         self.classify_client = rospy.ServiceProxy('/classifier_node/classify', Classify)
 
     def imageCallback(self, image):
