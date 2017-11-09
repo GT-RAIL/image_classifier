@@ -6,6 +6,7 @@ project(image_classifier)
 ## is used, also find other catkin packages
 
 find_package(catkin REQUIRED COMPONENTS
+  cv_bridge
   message_generation
   rospy
   sensor_msgs
@@ -43,6 +44,9 @@ include_directories(
   include
   ${catkin_INCLUDE_DIRS}
 )
+
+add_executable(example_knn src/example_knn.cpp)
+target_link_libraries(example_knn ${catkin_LIBRARIES} ${OpenCV_LIBRARIES})
 
 #############
 ## Install ##
