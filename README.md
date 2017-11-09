@@ -7,5 +7,20 @@ This package contains a set of ROS nodes that will subscribe to an image topic f
 1. **Calculate features from an image.**  The `image_node.py` script has placeholder code where you should fill in a feature vector from the subscribed image.  How you calculate the feature vector is up to you, as long as you can represent it in a list of floats.
 1. **Create training data.**  Once your feature representation is established, you will need to calculate feature vectors for your training images and store them in a .csv file.  There is an example data file, `example_data.csv`, in the data directory.  Each training instance goes on a new line, in the form `feature_1, feature_2, ..., feature_n, label`.
 1. **Train a classifier.**  The `train_classifier.py` script has everything you need to train and evaluate a classifier.  You just have to initialize the classifier you want, and set the parameters however you choose.  Running the script will read in the training data, train your classifier, provide a report of results, and save the model to the current directory.
-1. **Use your classifier.**  The`classifier_node.py` script will load a classifier from the `data/classifier/` directory and set up a ros service that the `image_node` will connect to.  Move your trained classifier into this directory to use it.  To test image classification, run both the `image_node.py` and `classifier_node.py` scripts, with the `raspicam_node` running on the robot.
+1. **Use your classifier.**  The`classifier_node.py` script will load a classifier from the `data/classifier/` directory and set up a ros service that the `image_node` will connect to.  There's a placeholder classifier in the directory already, but this won't work since it's not using your feature vector and wasn't trained on your training data.  Move your trained classifier into this directory to use it.  To test image classification, run both the `image_node.py` and `classifier_node.py` scripts, with the `raspicam_node` running on the robot.
 1. **(Optional) Change when classification occurs.**  By default, the `image_node` is set up to classify images as soon as they come in.  You may want to change the structure of this node to perform classification only when you need it.
+
+## Running the Nodes
+
+To train a classifier:
+```
+$ rosrun image_classifier train_classifier.py _file_name:=example_data.csv
+```
+
+To run the classifier:
+```
+$ rosrun image_classifier classifier_node.py _file_name:=classifier1.pkl
+$ rosrun image_classifier image_node.py
+```
+
+In both cases the parameters are optional and will default to the values given, but if you want to try multiple files with different names, the parameters can be used to load different data/models.
